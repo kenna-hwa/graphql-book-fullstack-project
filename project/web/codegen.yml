@@ -8,4 +8,4 @@ generates:
         content: '/* eslint-disable */'
       - "typescript"
       - "typescript-operations"
-      - "typescrip-react-apollo"
+      - "typescript-react-apollo"
