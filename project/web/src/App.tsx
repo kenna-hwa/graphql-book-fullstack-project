@@ -1,16 +1,16 @@
 import * as React from "react"
+import { ApolloProvider } from "@apollo/client";
 import {
   ChakraProvider, theme, Box, Text
 } from "@chakra-ui/react";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import FilmList from "./components/film/FlilmList";
+import { createApolloClient } from "./apollo/createApolloClient";
 
-const apolloClient = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
-  cache: new InMemoryCache(),
-})
 
-export const App = () => (
+
+const apolloClient = createApolloClient();
+
+export const App: React.FC = () => (
   <ApolloProvider client={apolloClient}>
   <ChakraProvider theme={theme}>
     <Box>
