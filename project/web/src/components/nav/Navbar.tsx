@@ -53,7 +53,7 @@ export default function Navbar(): JSX.Element {
 							display={{base: 'none', md: 'inline-flex'}}
 							fontSize="sm"
 							fontWeight={600}
-							href="/signup"
+							// href="/signup"
 							colorScheme="teal"
 							variant="link"
 							as={RouterLink}
