@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import FilmList from "./components/film/FlilmList";
 import { createApolloClient } from "./apollo/createApolloClient";
 import Main from "./pages/Main";
+import Film from "./pages/Film";
 
 
 
@@ -18,6 +19,7 @@ export const App: React.FC = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main/>} />
+        <Route path="/film/:filmId" element={<Film/>} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
