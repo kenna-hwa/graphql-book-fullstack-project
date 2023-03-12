@@ -10,13 +10,14 @@ import http from 'http';
 
 import { buildSchema } from 'type-graphql';
 import { FilmResolver } from './resolvers/Flim';
+import { CutResolver } from './resolvers/Cut';
 
 async function main() {
   const app = express();
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [FilmResolver],
+      resolvers: [FilmResolver, CutResolver],
     }),
     plugins: [ApolloServerPluginLandingPageLocalDefault()],
   });
