@@ -18,7 +18,7 @@ function FilmCutList({ filmId }: FilmCutListProps): React.ReactElement {
 	}
 
 	return (
-		<SimpleGrid my={4} column={[1, 2, null, 3]} spacing={[2, null, 8]}>
+		<SimpleGrid my={4} columns={[1, 2, null, 3]} spacing={[2, null, 8]}>
 			{data?.cuts.map((cut)=> (
 					<Image  src={cut.src} key={cut.id}/>
 				))}
