@@ -34,7 +34,6 @@ function FilmCutList({
         <LazyLoad height={200} once key={cut.id}>
           <LinkBox as="article">
             <Box>
-							{cut.id}번째 사진
               <LinkOverlay cursor="pointer" onClick={() => onClick(cut.id)}>
                 <Image src={cut.src} />
               </LinkOverlay>
