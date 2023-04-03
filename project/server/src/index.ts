@@ -11,8 +11,10 @@ import http from 'http';
 import { buildSchema } from 'type-graphql';
 import { FilmResolver } from './resolvers/Flim';
 import { CutResolver } from './resolvers/Cut';
+import { createDB } from './db/db-client';
 
 async function main() {
+  await createDB();
   const app = express();
 
   const apolloServer = new ApolloServer({
