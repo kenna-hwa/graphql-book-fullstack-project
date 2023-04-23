@@ -8,6 +8,7 @@ import FilmList from "./components/film/FlilmList";
 import { createApolloClient } from "./apollo/createApolloClient";
 import Main from "./pages/Main";
 import Film from "./pages/Film";
+import SignUp from "./pages/SignUp";
 
 
 
@@ -20,6 +21,8 @@ export const App: React.FC = () => (
       <Routes>
         <Route path="/" element={<Main/>} />
         <Route path="/film/:filmId" element={<Film/>} />
+        <Route path="/signup" element={<SignUp/>} />
+
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
