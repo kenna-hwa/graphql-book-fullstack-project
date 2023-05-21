@@ -2,6 +2,7 @@ import { Arg, Field, InputType, Mutation, Resolver, ObjectType } from "type-grap
 import User from "../entities/User";
 import { IsEmail, IsString } from "class-validator";
 import  argon2  from "argon2";
+import  jwt  from "jsonwebtoken";
 
 @InputType()
 export class SignUpInput {
@@ -54,9 +55,11 @@ export class UserResolver {
 	public async login(
 		@Arg('loginInput') loginInput : LoginInput,
 	) : Promise<LoginResponse> {
-		const { email, password } = loginInput;
+		const { emailOrUsername, password } = loginInput;
 
-		const user = await User.findOne({ where: {  email  } });
+		// 유저 확인 로직
+
+		const user = await User.findOne({ where: [{ email:  emailOrUsername  }, { username: emailOrUsername}] });
 
 		if(!user)
 		return { 
@@ -70,6 +73,17 @@ export class UserResolver {
 					{ field: 'password', message: '비밀번호를 올바르게 입력해주세요.'}
 				],
 		};
-		return { user };
+		
+		//액세스 토큰 발급
+		const accessToken = jwt.sign(
+			{ userId: user.id },
+			process.env.JWT_SECRET_KEY || 'secret-key',
+			{
+				expiresIn: '30m',
+			},
+		);
+
+		return { user, accessToken };
 	}
+
 }
