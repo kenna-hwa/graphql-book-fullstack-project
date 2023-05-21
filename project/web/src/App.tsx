@@ -9,6 +9,8 @@ import { createApolloClient } from "./apollo/createApolloClient";
 import Main from "./pages/Main";
 import Film from "./pages/Film";
 import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+
 
 
 
@@ -22,6 +24,8 @@ export const App: React.FC = () => (
         <Route path="/" element={<Main/>} />
         <Route path="/film/:filmId" element={<Film/>} />
         <Route path="/signup" element={<SignUp/>} />
+        <Route path="/login" element={<Login/>} />
+
 
       </Routes>
     </BrowserRouter>

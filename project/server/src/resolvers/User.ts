@@ -1,8 +1,8 @@
 import { Arg, Field, InputType, Mutation, Resolver, ObjectType } from "type-graphql";
-import User from "../entities/User";
 import { IsEmail, IsString } from "class-validator";
 import  argon2  from "argon2";
-import  jwt  from "jsonwebtoken";
+import { createAccessToken } from "../../utils/User";
+import User from "../entities/User";
 
 @InputType()
 export class SignUpInput {
@@ -63,7 +63,7 @@ export class UserResolver {
 
 		if(!user)
 		return { 
-			errors: [{ field: 'email', message: '해당하는 유저가 없습니다.' }],
+			errors: [{ field: 'emailOrUsername', message: '해당하는 유저가 없습니다.' }],
 		};
 
 		const isVaild = await argon2.verify(user.password, password);
@@ -75,13 +75,7 @@ export class UserResolver {
 		};
 		
 		//액세스 토큰 발급
-		const accessToken = jwt.sign(
-			{ userId: user.id },
-			process.env.JWT_SECRET_KEY || 'secret-key',
-			{
-				expiresIn: '30m',
-			},
-		);
+		const accessToken  = createAccessToken(user);
 
 		return { user, accessToken };
 	}
