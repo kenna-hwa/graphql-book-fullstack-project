@@ -1,0 +1,56 @@
+import  jwt  from "jsonwebtoken";
+import User from "../src/entities/User";
+import { AuthenticationError } from "apollo-server-express";
+export const DEFAULT_JWT_SECRET_KEY = 'secret-key';
+import { IncomingHttpHeaders } from 'http';
+
+export interface JwtVerifiedUser {
+	userId: User['id'];
+}
+
+// 액세스 토큰 발급
+export 	const createAccessToken = (user: User): string => {
+
+	const userData: JwtVerifiedUser = 	{ userId: user.id };
+
+	const accessToken = jwt.sign(
+		{ userId: user.id },
+		process.env.JWT_SECRET_KEY || 'secret-key',
+		{			expiresIn: '30m',		}
+	)
+		return accessToken;
+		};
+
+/* 액세스 토큰 검증 */
+export const verifyAccessToken = (
+	accessToken?: string,
+): JwtVerifiedUser | null => {
+	if(!accessToken) return null;
+	try {
+		const verified = jwt.verify(
+			accessToken,
+			process.env.JWT_SECRET_KEY || DEFAULT_JWT_SECRET_KEY,
+		) as JwtVerifiedUser;
+		return verified;
+	}	catch (err) {
+		console.error('access_token expired: ', err.expiredAt);
+		throw new AuthenticationError('access token expired');
+	};
+};
+
+/* req.headers 로부터 액세스 토큰 검증 */
+export const verifyAccessTokenFromReqHeaders = (
+	headers: IncomingHttpHeaders,
+): JwtVerifiedUser | null => {
+	const { authorization } = headers;
+	if(!authorization) return null;
+
+	const accessToken = authorization.split(' ')[1];
+	try{
+		return verifyAccessToken(accessToken);
+	}catch {
+		return null;
+	}
+};
+
+

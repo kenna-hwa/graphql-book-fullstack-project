@@ -1,7 +1,7 @@
 import { Arg, Field, InputType, Mutation, Resolver, ObjectType } from "type-graphql";
 import { IsEmail, IsString } from "class-validator";
 import  argon2  from "argon2";
-import { createAccessToken } from "../../utils/User";
+import { createAccessToken } from "../../utils/jwt-auth";
 import User from "../entities/User";
 
 @InputType()
