@@ -1,14 +1,14 @@
-mutation login($loginInput: LoginInput!){
-  login(loginInput: $loginInput) {
-    errors{
-      field
-      message
+mutation login($loginInput: LoginInput!) {
+    login(loginInput: $loginInput) {
+        errors {
+            field
+            message
+        }
+        user {
+            id
+            username
+            email
+        }   
+        accessToken
     }
-    user{
-      id
-      username
-      email
-    }
-    accessToken
-  }
 }

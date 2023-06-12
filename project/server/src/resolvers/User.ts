@@ -1,7 +1,7 @@
 import { Arg, Field, InputType, Mutation, Resolver, ObjectType, Query, Ctx, UseMiddleware } from "type-graphql";
 import { IsEmail, IsString } from "class-validator";
 import  argon2  from "argon2";
-import { createAccessToken } from "../../utils/jwt-auth";
+import { createAccessToken } from '../utils/jwt-auth';
 import User from "../entities/User";
 import { MyContext  } from "../apollo/createApolloServer";
 import { isAuthenticated } from "../middlewares/isAuthenticated";
@@ -86,10 +86,9 @@ export class UserResolver {
 	}
 
 	@UseMiddleware(isAuthenticated)
-
-	@Query(()=> User, { nullable: true })
-	async me(@Ctx() ctx: MyContext): Promise<User | undefined> {
-		if(!ctx.verifiedUser) return undefined;
-		return User.findOne({ where: { id: ctx.verifiedUser.userId } });
-	}
+  @Query(() => User, { nullable: true })
+  async me(@Ctx() ctx: MyContext): Promise<User | undefined> {
+    if (!ctx.verifiedUser) return undefined;
+    return User.findOne({ where: { id: ctx.verifiedUser.userId } });
+  }
 }

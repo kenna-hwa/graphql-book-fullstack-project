@@ -1,9 +1,9 @@
-mutation SignUp ($signUpInput: SignUpInput!) {
-  signUp(signUpInput: $signUpInput){
-    email
-    username
-    createAt
-    updateAt
-    id
-  }
+mutation signUp($signUpInput: SignUpInput!) {
+    signUp(signUpInput: $signUpInput) {
+        email
+        username
+        createdAt
+        updatedAt
+        id
+    }
 }

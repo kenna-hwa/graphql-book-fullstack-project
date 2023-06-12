@@ -5,7 +5,7 @@ import { FilmResolver } from "../resolvers/Flim";
 import { CutResolver } from "../resolvers/Cut";
 import { UserResolver } from "../resolvers/User";
 import { Request, Response } from "express";
-import { JwtVerifiedUser,verifyAccessTokenFromReqHeaders } from "../../utils/jwt-auth";
+import { JwtVerifiedUser,verifyAccessTokenFromReqHeaders } from "../utils/jwt-auth";
 
 export interface MyContext {
 	req: Request;

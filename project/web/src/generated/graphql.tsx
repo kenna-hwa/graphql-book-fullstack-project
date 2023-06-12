@@ -142,9 +142,9 @@ export type User = {
   /** 유저 이메일 */
   email: Scalars['String'];
   /** 생성 일자 */
-  createAt: Scalars['String'];
+  createdAt: Scalars['String'];
   /** 업데이트 일자 */
-  updateAt: Scalars['String'];
+  updatedAt: Scalars['String'];
 };
 
 export type LoginMutationVariables = Exact<{
@@ -176,7 +176,7 @@ export type SignUpMutation = (
   { __typename?: 'Mutation' }
   & { signUp: (
     { __typename?: 'User' }
-    & Pick<User, 'email' | 'username' | 'createAt' | 'updateAt' | 'id'>
+    & Pick<User, 'email' | 'username' | 'createdAt' | 'updatedAt' | 'id'>
   ) }
 );
 
@@ -256,7 +256,7 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'username' | 'email' | 'updateAt' | 'createAt'>
+    & Pick<User, 'id' | 'username' | 'email' | 'updatedAt' | 'createdAt'>
   )> }
 );
 
@@ -304,12 +304,12 @@ export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const SignUpDocument = gql`
-    mutation SignUp($signUpInput: SignUpInput!) {
+    mutation signUp($signUpInput: SignUpInput!) {
   signUp(signUpInput: $signUpInput) {
     email
     username
-    createAt
-    updateAt
+    createdAt
+    updatedAt
     id
   }
 }
@@ -515,8 +515,8 @@ export const MeDocument = gql`
     id
     username
     email
-    updateAt
-    createAt
+    updatedAt
+    createdAt
   }
 }
     `;

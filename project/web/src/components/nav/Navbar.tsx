@@ -14,15 +14,6 @@ import { useMemo } from 'react';
 
 
 
-const LoggedInNavbarItem = (): JSX.Element => {
-	return (
-		<Stack justify="flex-end" alignItems="center" direction="row" spacing={3}>
-			<ColorModeSwitcher />
-			<Avatar size="sm" />
-		</Stack>
-	);
-};
-
 
 export default function Navbar(): JSX.Element {
 
@@ -93,3 +84,13 @@ export default function Navbar(): JSX.Element {
 		</Box>
 	);
 }
+
+
+const LoggedInNavbarItem = (): JSX.Element => {
+	return (
+		<Stack justify="flex-end" alignItems="center" direction="row" spacing={3}>
+			<ColorModeSwitcher />
+			<Avatar size="sm" />
+		</Stack>
+	);
+};
