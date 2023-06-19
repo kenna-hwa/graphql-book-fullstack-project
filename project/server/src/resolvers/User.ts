@@ -1,7 +1,8 @@
 import { Arg, Field, InputType, Mutation, Resolver, ObjectType, Query, Ctx, UseMiddleware } from "type-graphql";
 import { IsEmail, IsString } from "class-validator";
 import  argon2  from "argon2";
-import { createAccessToken } from '../utils/jwt-auth';
+import { createAccessToken, setRefreshTokenHeader } from '../utils/jwt-auth';
+import { createRefreshToken } from '../utils/jwt-auth';
 import User from "../entities/User";
 import { MyContext  } from "../apollo/createApolloServer";
 import { isAuthenticated } from "../middlewares/isAuthenticated";
@@ -59,6 +60,7 @@ export class UserResolver {
 	@Mutation(()=>LoginResponse)
 	public async login(
 		@Arg('loginInput') loginInput : LoginInput,
+		@Ctx() { res } : MyContext,
 	) : Promise<LoginResponse> {
 		const { emailOrUsername, password } = loginInput;
 
@@ -81,6 +83,9 @@ export class UserResolver {
 		
 		//액세스 토큰 발급
 		const accessToken  = createAccessToken(user);
+		const refreshToken = createRefreshToken(user);
+
+		setRefreshTokenHeader(res, refreshToken);
 
 		return { user, accessToken };
 	}
