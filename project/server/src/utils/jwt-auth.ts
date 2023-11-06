@@ -60,7 +60,7 @@ export const createRefreshToken = (user: User): string => {
   return jwt.sign(
     userData,
     process.env.JWT_REFRESH_SECRET_KEY || REFRESH_JWT_SECRET_KEY,
-    { expiresIn: '14d' },
+    { expiresIn: '30m' },
   );
 };
 
