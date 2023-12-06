@@ -47,7 +47,7 @@ class RefreshAccessTokenResponse{
 
 @Resolver(User)
 export class UserResolver {
-	@UseMiddleware(isAuthenticated)
+	@Mutation(() => User)
   @Query(() => User, { nullable: true })
   async me(@Ctx() ctx: MyContext): Promise<User | undefined> {
     if (!ctx.verifiedUser) return undefined;
@@ -102,7 +102,18 @@ export class UserResolver {
 
 		return { user, accessToken };
 	}
-
+	@Mutation(() => Boolean)
+	@UseMiddleware(isAuthenticated)
+	async logout(
+		@Ctx() { verifiedUser, res, redis }: MyContext,
+	): Promise<boolean>{
+		if(verifiedUser){
+			setRefreshTokenHeader(res, '');//리프레시 토큰 쿠키 제거
+			await redis.del(String(verifiedUser.userId));//레디스 리프레시 토큰 제거
+		}
+		return true;
+	}
+	
 	@Mutation(()=> RefreshAccessTokenResponse, { nullable: true })
 	async refreshAccessToken(
 		@Ctx() { req, redis, res }: MyContext,

@@ -14,10 +14,11 @@ export interface JwtVerifiedUser {
 export const createAccessToken = (user: User): string => {
   const userData: JwtVerifiedUser = { userId: user.id };
   const accessToken = jwt.sign(
-    userData,
-    process.env.JWT_SECRET_KEY || DEFAULT_JWT_SECRET_KEY,
-    { expiresIn: '10m' },
-  );
+    userData, 
+    process.env.JWT_SECRET_KEY || 'secret-key', {
+    expiresIn: '10m',
+  });
+
   return accessToken;
 };
 
@@ -60,7 +61,7 @@ export const createRefreshToken = (user: User): string => {
   return jwt.sign(
     userData,
     process.env.JWT_REFRESH_SECRET_KEY || REFRESH_JWT_SECRET_KEY,
-    { expiresIn: '30m' },
+    { expiresIn: '10m' },
   );
 };
 
