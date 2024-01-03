@@ -1,7 +1,8 @@
 import { verifyAccessToken } from './../utils/jwt-auth';
 import { IsInt, IsString } from 'class-validator';
 import { CutReview } from './../entities/CutReview';
-import { Root, Int, Arg, Ctx, Field, FieldResolver, InputType, Mutation, Resolver, UseMiddleware } from 'type-graphql';
+import { Query, ArgsType, Args, Root, Int, Arg, Ctx, Field, FieldResolver, InputType, Mutation, Resolver, UseMiddleware } from 'type-graphql';
+import { Not } from 'typeorm';
 import { MyContext } from '../apollo/createApolloServer';
 import { isAuthenticated } from '../middlewares/isAuthenticated';
 import User from '../entities/User';
@@ -17,8 +18,21 @@ class CreateOrUpdateCutReviewInput {
 	contents: string;
 }
 
+@ArgsType()
+class PaginationArgs {
+	@Field(() => Int, { defaultValue: 2 })
+	take: number;
+
+	@Field(() => Int, { nullable: true })
+	skip?: number;
+
+	@Field(() => Int) cutId: number;
+}
+
 @Resolver(CutReview)
 export class CutReviewResolver {
+
+
 	@Mutation(()=> CutReview, { nullable: true })
 	@UseMiddleware(isAuthenticated)
 	async createOrUpdateCutReview(
@@ -68,4 +82,6 @@ export class CutReviewResolver {
 		}
 		return false;
 	}
+
+
 }
